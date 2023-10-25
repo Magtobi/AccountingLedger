@@ -3,6 +3,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.io.*;
+import static com.pluralsight.DisplayLedger.*;
 public class HomeScreen {
     // Created global variables
 
@@ -12,14 +13,14 @@ public class HomeScreen {
     // Create a HashMap to store ledger entries (Transactions)
     public static HashMap<Integer, Ledger> ledgerHashMap = new HashMap<Integer, Ledger>();
 
-    // Scanner for user input
-    static Scanner myScanner = new Scanner(System.in);
-
     // Initialize a transaction identifier
     static int transactionId = 0;
 
+
+
     // Main Menu for the program
      public static void homeScreen() throws IOException {
+        Scanner myScanner = new Scanner(System.in);
          String userInput;
 
          do {
@@ -43,7 +44,7 @@ public class HomeScreen {
                      makePayment();
                      break;
                  case "L":
-                     showLedger();
+                     displayLedger();
                      break;
                  case "X":
                      // Exit the program
@@ -59,6 +60,7 @@ public class HomeScreen {
 
      // Function to add a deposit transaction
      public static void addDeposit() throws IOException {
+         Scanner myScanner = new Scanner(System.in);
 
          // Create a BufferedWriter to write transactions to the file
          BufferedWriter bfWriter;
@@ -100,6 +102,7 @@ public class HomeScreen {
 
      // Function for making a payment
      public static void makePayment() throws IOException {
+         Scanner myScanner = new Scanner(System.in);
 
          // Create BufferedWriter to write payment transactions to file
          BufferedWriter bfWriter;
