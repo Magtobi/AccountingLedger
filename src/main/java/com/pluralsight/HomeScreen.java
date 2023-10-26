@@ -4,11 +4,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.io.*;
 import static com.pluralsight.DisplayLedger.*;
+
 public class HomeScreen {
     // Created global variables
-
     // Define date and time format for displaying transactions
     public static DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm:ss");
+    public static Scanner myScanner = new Scanner(System.in);
 
     // Create a HashMap to store ledger entries (Transactions)
     public static HashMap<Integer, Ledger> ledgerHashMap = new HashMap<Integer, Ledger>();
@@ -20,7 +21,7 @@ public class HomeScreen {
 
     // Main Menu for the program
      public static void homeScreen() throws IOException {
-        Scanner myScanner = new Scanner(System.in);
+
          String userInput;
 
          do {
@@ -33,6 +34,7 @@ public class HomeScreen {
 
              // Get the user's choice
              userInput = myScanner.next();
+             String input = myScanner.next().toUpperCase();
              myScanner.nextLine();
 
              // Respond to user's choice
@@ -60,7 +62,7 @@ public class HomeScreen {
 
      // Function to add a deposit transaction
      public static void addDeposit() throws IOException {
-         Scanner myScanner = new Scanner(System.in);
+
 
          // Create a BufferedWriter to write transactions to the file
          BufferedWriter bfWriter;
@@ -102,7 +104,7 @@ public class HomeScreen {
 
      // Function for making a payment
      public static void makePayment() throws IOException {
-         Scanner myScanner = new Scanner(System.in);
+
 
          // Create BufferedWriter to write payment transactions to file
          BufferedWriter bfWriter;
