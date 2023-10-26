@@ -34,8 +34,7 @@ public class HomeScreen {
 
              // Get the user's choice
              userInput = myScanner.next();
-             String input = myScanner.next().toUpperCase();
-             myScanner.nextLine();
+             myScanner.nextLine().trim().toUpperCase();
 
              // Respond to user's choice
              switch (userInput) {
@@ -71,12 +70,12 @@ public class HomeScreen {
          // Gather details for the deposit
          while (true) {
              System.out.println("Description of transaction ");
-             String description = myScanner.nextLine();
+             String description = myScanner.nextLine().trim();
              System.out.println("Vendor ");
-             String vendor = myScanner.nextLine();
+             String vendor = myScanner.nextLine().trim();
              System.out.println("What is the amount ");
              double amount = myScanner.nextDouble();
-             myScanner.nextLine();
+             myScanner.nextLine().trim();
 
 
              // Get current date and time for the deposit
@@ -90,7 +89,7 @@ public class HomeScreen {
 
              // Ask if the user wants to make another deposit
              System.out.println("Deposit has been made. Would you like to make another deposit? (Y/N): ");
-             String userInput = myScanner.nextLine().toUpperCase();
+             String userInput = myScanner.nextLine().trim().toUpperCase();
 
 
              // Exit the deposit loop if the user enters "N" (No)
@@ -114,12 +113,12 @@ public class HomeScreen {
          // Ask user for details about payment
          while (true) {
              System.out.println("Description of transaction: ");
-             String description = myScanner.nextLine();
+             String description = myScanner.nextLine().trim();
              System.out.println("Vendor: ");
-             String vendor = myScanner.nextLine();
+             String vendor = myScanner.nextLine().trim();
              System.out.println("What is the amount: ");
              double amount = myScanner.nextDouble();
-             myScanner.nextLine();
+             myScanner.nextLine().trim();
 
              // Mark the amount as negative to indicate it is a payment
              amount *= -1;
@@ -134,7 +133,7 @@ public class HomeScreen {
 
              // Ask if the user wants to make another payment
              System.out.println("Payment has been made. Would you like to make another payment? (Y/N): ");
-             String userInput = myScanner.nextLine().toUpperCase();
+             String userInput = myScanner.nextLine().trim().toUpperCase();
 
              // Exit the payment loop if the user enters "N" (No)
              if (userInput.equals("N")) {
