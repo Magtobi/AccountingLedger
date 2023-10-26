@@ -11,11 +11,11 @@ import static com.pluralsight.Ledger.*;
 
 public class DisplayLedger {
     static Scanner myScanner = new Scanner(System.in);
-    static List<Ledger> ledgerList = new ArrayList<>();
+    static ArrayList<Ledger> ledgerList = new ArrayList<>();
 
     public static void displayLedger() throws IOException {
 
-        Reader.Reader();
+        Reader.fileReader();
         String userInput;
         do {
             System.out.println("These are your options" +
@@ -26,7 +26,7 @@ public class DisplayLedger {
                     "\nH) Home");
 
             userInput = myScanner.next();
-            myScanner.nextLine().trim().toUpperCase();
+            myScanner.nextLine().trim();
 
             switch (userInput) {
                 case "A":
@@ -50,22 +50,23 @@ public class DisplayLedger {
         } while (!userInput.equals("H"));
 
     }
-    public static List<Ledger> ledgerListByDate(List<Ledger> ledgerlist) {
+    public static ArrayList<Ledger> ledgerListByDate(ArrayList<Ledger> ledgerlist) {
         Collections.sort(ledgerList, (r1, r2) -> {
             LocalDateTime dateTime1 = LocalDateTime.of(r1.getDate(), r1.getTime());
             LocalDateTime dateTime2 = LocalDateTime.of(r2.getDate(), r2.getTime());
-            return dateTime2.compareTo(dateTime1);
+            return dateTime1.compareTo(dateTime2);
         });
         return ledgerlist;
     }
 
-    public static void displayAll(List<Ledger> ledgerList) throws IOException {
-        for (Ledger r : ledgerList)
+    public static void displayAll(ArrayList<Ledger> ledgerList) throws IOException {
+        for (Ledger r : ledgerList) {
             System.out.printf("date|%s|time|description|%s|vendor|%s|amount|$%>f%n",
-                    r.getDate(),r.getTime(), r.getDescription(), r.getVendor(), r.getAmount());
+                    r.getDate(), r.getTime(), r.getDescription(), r.getVendor(), r.getAmount());
+        }
     }
 
-    public static void displayDeposits(List<Ledger> ledgerList) throws IOException {
+    public static void displayDeposits(ArrayList<Ledger> ledgerList) throws IOException {
         for (Ledger r : ledgerList) {
             if (r.getAmount() > 0) {
                 System.out.printf("date|%s|time|%s|description|%s|vendor|%s|amount|$%.2f%n",
@@ -74,7 +75,7 @@ public class DisplayLedger {
         }
     }
 
-    public static void displayPayments(List<Ledger> ledgerList) throws IOException {
+    public static void displayPayments(ArrayList<Ledger> ledgerList) throws IOException {
         for (Ledger r : ledgerList) {
             if (r.getAmount() < 0) {
                 System.out.printf("date|%s|time|%s|description|%s|vendor|%s|amount|$%.2f%n",
@@ -83,7 +84,7 @@ public class DisplayLedger {
         }
     }
 
-    public static void newReports(List<Ledger> ledgerList) throws IOException {
+    public static void newReports(ArrayList<Ledger> ledgerList) throws IOException {
         LocalDate currentDate = LocalDate.now();
         Month currentMonth = currentDate.getMonth();
         YearMonth currentYearMonth = YearMonth.from(currentDate);

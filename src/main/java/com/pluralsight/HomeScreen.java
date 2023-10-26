@@ -1,5 +1,6 @@
 package com.pluralsight;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.io.*;
@@ -8,7 +9,8 @@ import static com.pluralsight.DisplayLedger.*;
 public class HomeScreen {
     // Created global variables
     // Define date and time format for displaying transactions
-    public static DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm:ss");
+    public static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public static DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
     public static Scanner myScanner = new Scanner(System.in);
 
     // Create a HashMap to store ledger entries (Transactions)
@@ -34,7 +36,7 @@ public class HomeScreen {
 
              // Get the user's choice
              userInput = myScanner.next();
-             myScanner.nextLine().trim().toUpperCase();
+             myScanner.nextLine().trim();
 
              // Respond to user's choice
              switch (userInput) {
@@ -62,7 +64,6 @@ public class HomeScreen {
      // Function to add a deposit transaction
      public static void addDeposit() throws IOException {
 
-
          // Create a BufferedWriter to write transactions to the file
          BufferedWriter bfWriter;
          bfWriter = new BufferedWriter(new FileWriter("src/main/resources/transactions.csv", true));
@@ -77,21 +78,16 @@ public class HomeScreen {
              double amount = myScanner.nextDouble();
              myScanner.nextLine().trim();
 
-
              // Get current date and time for the deposit
-             LocalDateTime currentDateTime = LocalDateTime.now();
-             String formattedDateTime = currentDateTime.format(format);
-
+             String date = dateFormat.format(LocalDate.now());
+             String time = timeFormat.format(LocalTime.now());
 
              // Write the transactions details to the file
-             bfWriter.write(formattedDateTime + "|" + description + "|" + vendor + "|" + amount);
              bfWriter.newLine();
-
+             bfWriter.write(date + "|" + time + "|" + description + "|" + vendor + "|" + amount);
              // Ask if the user wants to make another deposit
              System.out.println("Deposit has been made. Would you like to make another deposit? (Y/N): ");
-             String userInput = myScanner.nextLine().trim().toUpperCase();
-
-
+             String userInput = myScanner.nextLine().trim();
              // Exit the deposit loop if the user enters "N" (No)
              if (userInput.equals("N")) {
                  break;
@@ -124,16 +120,17 @@ public class HomeScreen {
              amount *= -1;
 
              // Get current date and time for the payment
-             LocalDateTime currentDateTime = LocalDateTime.now();
-             String formattedDateTime = currentDateTime.format(format);
+             String date = String.valueOf(LocalDate.now());
+             String time = timeFormat.format(LocalTime.now());
 
              // Write the payment details to the file
-             bfWriter.write(formattedDateTime + "|" + description + "|" + vendor + "|" + "|" + amount);
              bfWriter.newLine();
+             bfWriter.write(date + "|" + description + "|" + vendor + "|" + "|" + amount);
+
 
              // Ask if the user wants to make another payment
              System.out.println("Payment has been made. Would you like to make another payment? (Y/N): ");
-             String userInput = myScanner.nextLine().trim().toUpperCase();
+             String userInput = myScanner.nextLine().trim();
 
              // Exit the payment loop if the user enters "N" (No)
              if (userInput.equals("N")) {

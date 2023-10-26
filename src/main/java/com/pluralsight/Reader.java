@@ -2,14 +2,17 @@ package com.pluralsight;
 import java.io.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
+import java.util.ArrayList;
+import java.time.DateTimeException;
 
 import static com.pluralsight.HomeScreen.*;
 public class Reader {
     static HashMap<Integer, Ledger> ledgerHashMap = new HashMap<>();
     static int transactionId = 0;
 
-    public static void Reader() throws IOException {
+    public static void fileReader() throws IOException {
 
         // Clear the HashMap
         ledgerHashMap.clear();
@@ -27,30 +30,31 @@ public class Reader {
         DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
 
         // Create readers to read the transactions data from the file
-        FileReader fr = new FileReader("src/main/resources/transactions.csv");
-        BufferedReader bf = new BufferedReader(fr);
+        FileReader fileReader = new FileReader("src/main/resources/transactions.csv");
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
 
         // Read each line of the file until there are no more lines
-        while ((input = bf.readLine()) != null) {
+        while ((input = bufferedReader.readLine()) != null) {
             // Split the line of data into
-            String[] transactionsReader = input.split("\\|");
-            if (transactionsReader.length >= 5) {
-                if (!transactionsReader[0].contains("date")) {
-                    try {
-                        dateCSV = LocalDate.parse(transactionsReader[0], dateFormat);
-                        timeCSV = LocalTime.parse(transactionsReader[1], timeFormat);
-                        descriptionCSV = transactionsReader[2];
-                        vendorCSV = transactionsReader[3];
-                        amountCSV = Double.parseDouble(transactionsReader[4]);
-                        ledgerHashMap.put(transactionId, new Ledger(dateCSV, timeCSV, descriptionCSV, vendorCSV, amountCSV));
-                        transactionId++;
-                    } catch (Exception e) {
-
-                    }
+            String[] transactionReader = input.split("\\|");
+            if (!transactionReader[0].contains("date")) {
+                try {
+                    dateCSV = LocalDate.parse(transactionReader[0], dateFormat);
+                    timeCSV = LocalTime.parse(transactionReader[1], timeFormat);
+                    descriptionCSV = transactionReader[2];
+                    vendorCSV = transactionReader[3];
+                    amountCSV = Double.parseDouble(transactionReader[4]);
+                    //store details into hashmap
+                    ledgerHashMap.put(transactionId, new Ledger(dateCSV, timeCSV, descriptionCSV, vendorCSV, amountCSV));
+                    transactionId++;
+                    ArrayList<Ledger> ledgerList = new ArrayList<>(ledgerHashMap.values());
+                } catch (NumberFormatException e) {
+                    throw new RuntimeException(e);
                 }
+                bufferedReader.close();
             }
         }
-        bf.close();
     }
 }
+
 
