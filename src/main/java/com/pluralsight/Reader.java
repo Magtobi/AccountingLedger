@@ -26,8 +26,6 @@ public class Reader {
         String vendorCSV;
         double amountCSV;
 
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
 
         // Create readers to read the transactions data from the file
         FileReader fileReader = new FileReader("src/main/resources/transactions.csv");
@@ -35,25 +33,33 @@ public class Reader {
 
         // Read each line of the file until there are no more lines
         while ((input = bufferedReader.readLine()) != null) {
-            // Split the line of data into
+            // Split the line of data
             String[] transactionReader = input.split("\\|");
             if (!transactionReader[0].contains("date")) {
                 try {
-                    dateCSV = LocalDate.parse(transactionReader[0], dateFormat);
-                    timeCSV = LocalTime.parse(transactionReader[1], timeFormat);
-                    descriptionCSV = transactionReader[2];
-                    vendorCSV = transactionReader[3];
-                    amountCSV = Double.parseDouble(transactionReader[4]);
-                    //store details into hashmap
+                    // Parse the CSV data into variables
+                    dateCSV = LocalDate.parse(transactionReader[0]); // Extract and convert the date
+                    timeCSV = LocalTime.parse(transactionReader[1]); // Extract and convert the time
+                    descriptionCSV = transactionReader[2]; // Extract the description
+                    vendorCSV = transactionReader[3]; // Extract the vendor
+                    amountCSV = Double.parseDouble(transactionReader[4]); // Extract and convert the amount to a double
+
+                    //store extracted details into a HashMap with a transactionId
                     ledgerHashMap.put(transactionId, new Ledger(dateCSV, timeCSV, descriptionCSV, vendorCSV, amountCSV));
                     transactionId++;
-                    ArrayList<Ledger> ledgerList = new ArrayList<>(ledgerHashMap.values());
+
+                    // Update the ledgerList which is an ArrayList of ledger entries
+                    ledgerList = new ArrayList<>(ledgerHashMap.values());
+
+                    // If there's an issue with number formatting, raise a runtime exception
                 } catch (NumberFormatException e) {
                     throw new RuntimeException(e);
                 }
-                bufferedReader.close();
+
             }
         }
+        // Close BufferedReader
+        bufferedReader.close();
     }
 }
 

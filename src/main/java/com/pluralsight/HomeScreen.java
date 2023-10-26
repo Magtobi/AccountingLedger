@@ -15,9 +15,9 @@ public class HomeScreen {
 
     // Create a HashMap to store ledger entries (Transactions)
     public static HashMap<Integer, Ledger> ledgerHashMap = new HashMap<Integer, Ledger>();
+    public static ArrayList<Ledger> ledgerList = new ArrayList<>(ledgerHashMap.values());
 
-    // Initialize a transaction identifier
-    static int transactionId = 0;
+
 
 
 
@@ -35,8 +35,8 @@ public class HomeScreen {
                      "\nX) Exit");
 
              // Get the user's choice
-             userInput = myScanner.next();
-             myScanner.nextLine().trim();
+             userInput = myScanner.nextLine().trim();
+
 
              // Respond to user's choice
              switch (userInput) {
@@ -57,7 +57,7 @@ public class HomeScreen {
              }
          }
          // Continue looping until "X" is selected
-         while (!userInput.equals("X"));
+         while (true);
 
      }
 
@@ -85,9 +85,11 @@ public class HomeScreen {
              // Write the transactions details to the file
              bfWriter.newLine();
              bfWriter.write(date + "|" + time + "|" + description + "|" + vendor + "|" + amount);
+
              // Ask if the user wants to make another deposit
              System.out.println("Deposit has been made. Would you like to make another deposit? (Y/N): ");
              String userInput = myScanner.nextLine().trim();
+
              // Exit the deposit loop if the user enters "N" (No)
              if (userInput.equals("N")) {
                  break;
@@ -125,7 +127,7 @@ public class HomeScreen {
 
              // Write the payment details to the file
              bfWriter.newLine();
-             bfWriter.write(date + "|" + description + "|" + vendor + "|" + "|" + amount);
+             bfWriter.write(date + "|" + time + "|" + description + "|" + vendor + "|" + amount);
 
 
              // Ask if the user wants to make another payment
@@ -136,9 +138,9 @@ public class HomeScreen {
              if (userInput.equals("N")) {
                  break;
              }
-             // Close the BufferedWriter
-             bfWriter.close();
          }
+         // Close BufferedWriter
+         bfWriter.close();
      }
 }
 
