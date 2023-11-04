@@ -1,4 +1,4 @@
-Accounting Ledger Application
+# Accounting Ledger Application
 
 
 ![HomeScreen](https://github.com/Magtobi/AccountingLedger/assets/146876261/32fc2d95-9490-416c-b00e-36970cb5b2bc)
