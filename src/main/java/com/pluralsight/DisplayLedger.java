@@ -64,7 +64,7 @@ public class DisplayLedger {
     }
 
     // This method displays all ledger entries
-    public static void displayAll(ArrayList<Ledger> ledgerList) throws IOException {
+    public static void displayAll(ArrayList<Ledger> ledgerList) {
         for (Ledger r : ledgerList) {
             // Printing details of each ledger in this format
             System.out.printf("date|%s|time|%s|description|%s|vendor|%s|amount|$%.2f%n",
@@ -73,7 +73,7 @@ public class DisplayLedger {
     }
 
     // This method displays deposits from the ledger (positive amounts)
-    public static void displayDeposits(ArrayList<Ledger> ledgerList) throws IOException {
+    public static void displayDeposits(ArrayList<Ledger> ledgerList) {
         for (Ledger r : ledgerList) {
             // Check if the ledger entry represents a deposit
             if (r.getAmount() > 0) {
@@ -85,7 +85,7 @@ public class DisplayLedger {
     }
 
     // This method displays payments from the ledger (negative amounts)
-    public static void displayPayments(ArrayList<Ledger> ledgerList) throws IOException {
+    public static void displayPayments(ArrayList<Ledger> ledgerList) {
         for (Ledger r : ledgerList) {
             // Check if the ledger entry represents a payment
             if (r.getAmount() < 0) {
